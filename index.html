@@ -1,0 +1,49 @@
+<title>Trading Tracker</title>
+
+<style>
+body {
+    background: #d1fae5;
+    font-family: Arial;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 300px;
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #22c55e;
+    color: white;
+    border: none;
+}
+</style>
+
+<div class="card">
+    <h2>Trading Tracker</h2>
+    <input id="user" placeholder="Username">
+    <input id="pass" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p><a href="register.html">Register</a></p>
+</div>
+
+<script src="auth.js"></script>
+<script>
+function login() {
+    loginUser(user.value, pass.value);
+}
+</script>

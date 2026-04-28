@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading Tracker</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+}
+
+/* NAVBAR */
+.nav {
+    background: white;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.nav h2 {
+    color: #16a34a;
+    margin: 0;
+}
+
+.nav button {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* MAIN */
+.container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* WELCOME */
+.welcome {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* TOTAL CARD */
+.total-card {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+}
+
+.total-card h3 {
+    margin: 0;
+    color: #6b7280;
+}
+
+.total-amount {
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+/* CARDS */
+.card {
+    padding: 25px;
+    border-radius: 14px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    text-align: center;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Different colors */
+.stocks { background: #22c55e; }
+.fno { background: #3b82f6; }
+.crypto { background: #a855f7; }
+.commodities { background: #f59e0b; }
+.forex { background: #ef4444; }
+
+.card span {
+    display: block;
+    font-size: 14px;
+    margin-top: 6px;
+    opacity: 0.9;
+}
+</style>
+</head>
+
+<body onload="init()">
+
+<!-- NAVBAR -->
+<div class="nav">
+    <h2>Trading Tracker</h2>
+    <button onclick="logout()">Logout</button>
+</div>
+
+<div class="container">
+
+    <!-- Welcome -->
+    <div class="welcome" id="welcome"></div>
+
+    <!-- Total Profit/Loss -->
+    <div class="total-card">
+        <h3>Total Profit / Loss</h3>
+        <div id="totalPL" class="total-amount">0</div>
+    </div>
+
+    <!-- Sections -->
+    <div class="grid">
+        <div class="card stocks" onclick="go('stocks.html')">Stocks<span>Track equity trades</span></div>
+        <div class="card fno" onclick="go('fno.html')">F&O<span>Options & Futures</span></div>
+        <div class="card crypto" onclick="go('crypto.html')">Crypto<span>Digital assets</span></div>
+        <div class="card commodities" onclick="go('commodities.html')">Commodities<span>Gold, Oil, etc.</span></div>
+        <div class="card forex" onclick="go('forex.html')">Forex<span>Currency trading</span></div>
+    </div>
+
+</div>
+
+<script src="auth.js"></script>
+
+<script>
+function init() {
+    checkAuth();
+
+    const user = localStorage.getItem("currentUser");
+    document.getElementById("welcome").innerText = "Welcome, " + user;
+
+    calculateTotal();
+}
+
+function go(page) {
+    window.location.href = page;
+}
+
+// TOTAL CALCULATION
+function calculateTotal() {
+    const user = localStorage.getItem("currentUser");
+
+    let total = 0;
+    const sections = ["stocks","fno","crypto","commodities","forex"];
+
+    sections.forEach(sec => {
+        const data = JSON.parse(localStorage.getItem(user + "_" + sec) || "{}");
+        Object.values(data).forEach(day => {
+            day.entries?.forEach(e => total += e.value);
+        });
+    });
+
+    const el = document.getElementById("totalPL");
+    el.innerText = total.toLocaleString();
+
+    // COLOR LOGIC
+    if (total > 0) el.style.color = "#16a34a";
+    else if (total < 0) el.style.color = "#dc2626";
+    else el.style.color = "#374151";
+}
+</script>
+
+</body>
+</html>

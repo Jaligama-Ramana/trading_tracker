@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Tracker</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            color: #1f2937;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            background: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar h2 {
+            color: #16a34a;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .home-btn {
+            background: #22c55e;
+            color: white;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* WRAPPER */
+
+        .wrap {
+            max-width: 1500px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        /* TOP CARDS */
+
+        .top-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 22px;
+            border-radius: 18px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .summary-title {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .summary-value {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .green {
+            color: #16a34a;
+        }
+
+        .red {
+            color: #dc2626;
+        }
+
+        /* TOOLBAR */
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .toolbar button {
+            border: none;
+            background: white;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: 0.2s;
+        }
+
+        .toolbar button:hover {
+            transform: translateY(-2px);
+        }
+
+        .month-label {
+            font-size: 22px;
+            font-weight: bold;
+            color: #16a34a;
+        }
+
+        .month-total {
+            background: white;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* CALENDAR */
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 14px;
+        }
+
+        .dow {
+            text-align: center;
+            font-weight: bold;
+            color: #4b5563;
+            padding: 10px;
+        }
+
+        .cell {
+            background: white;
+            border-radius: 18px;
+            min-height: 220px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: 0.2s;
+        }
+
+        .cell:hover {
+            transform: translateY(-3px);
+        }
+
+        .outside {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .day-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-number {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .badge {
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 4px 8px;
+            border-radius: 999px;
+        }
+
+        .day-total {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #d1d5db;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px #bbf7d0;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .add-btn {
+            background: #22c55e;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 14px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .entries {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .entry-chip {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .remove-entry {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: #6b7280;
+            font-weight: bold;
+        }
+
+        /* COLORS */
+
+        .profit {
+            background: #86efac;
+        }
+
+        .loss {
+            background: #fca5a5;
+        }
+
+        .notrade {
+            background: #fbcfe8;
+        }
+
+        .weekend {
+            background: #bfdbfe;
+        }
+
+        .future {
+            background: #f3f4f6;
+        }
+
+        /* MOBILE */
+
+        @media(max-width:900px) {
+            .calendar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width:600px) {
+            .calendar {
+                grid-template-columns: 1fr;
+            }
+
+            .cell {
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+        <h2 id="pageTitle">Trading Tracker</h2>
+
+        <div class="nav-buttons">
+            <button class="nav-btn home-btn" onclick="window.location.href='home.html'">Home</button>
+            <button class="nav-btn logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <div class="wrap">
+
+        <!-- SUMMARY -->
+
+        <div class="top-section">
+
+            <div class="summary-card">
+                <div class="summary-title">Welcome</div>
+                <div class="summary-value" id="welcomeUser"></div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-title">Section Total</div>
+                <div class="summary-value" id="sectionTotal">0</div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-title">Monthly Total</div>
+                <div class="summary-value" id="monthTotal">0</div>
+            </div>
+
+        </div>
+
+        <!-- TOOLBAR -->
+
+        <div class="toolbar">
+            <button id="prevBtn">◀ Previous</button>
+            <button id="nextBtn">Next ▶</button>
+
+            <div class="month-label" id="monthLabel"></div>
+        </div>
+
+        <!-- CALENDAR -->
+
+        <div class="calendar" id="calendar"></div>
+
+    </div>
+
+    <script src="auth.js"></script>
+
+    <script>
+
+        checkAuth();
+
+        // PAGE TYPE
+
+        const params = new URLSearchParams(window.location.search);
+        const PAGE_TYPE = params.get("type") || "stocks";
+
+        document.getElementById("pageTitle").innerText =
+            PAGE_TYPE.toUpperCase();
+
+        // USER
+
+        const user = localStorage.getItem("currentUser");
+
+        document.getElementById("welcomeUser").innerText =
+            user;
+
+        // STORAGE
+
+        const STORAGE_KEY = user + "_" + PAGE_TYPE;
+
+        const COLORS = {
+            profit: "profit",
+            loss: "loss",
+            noTrade: "notrade",
+            weekend: "weekend",
+            future: "future"
+        };
+
+        const monthNames = [
+            "January", "February", "March", "April",
+            "May", "June", "July", "August",
+            "September", "October", "November", "December"
+        ];
+
+        const dayNames = [
+            "Sun", "Mon", "Tue", "Wed",
+            "Thu", "Fri", "Sat"
+        ];
+
+        const calendarEl = document.getElementById("calendar");
+        const monthLabel = document.getElementById("monthLabel");
+
+        let current = new Date();
+        let viewMonth = current.getMonth();
+        let viewYear = current.getFullYear();
+
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+
+        document.getElementById("prevBtn").onclick = () => {
+            viewMonth--;
+
+            if (viewMonth < 0) {
+                viewMonth = 11;
+                viewYear--;
+            }
+
+            render();
+        };
+
+        document.getElementById("nextBtn").onclick = () => {
+            viewMonth++;
+
+            if (viewMonth > 11) {
+                viewMonth = 0;
+                viewYear++;
+            }
+
+            render();
+        };
+
+        function render() {
+
+            calendarEl.innerHTML = "";
+
+            monthLabel.innerText =
+                `${monthNames[viewMonth]} ${viewYear}`;
+
+            // DAYS HEADER
+
+            dayNames.forEach(day => {
+                const d = document.createElement("div");
+                d.className = "dow";
+                d.innerText = day;
+                calendarEl.appendChild(d);
+            });
+
+            const firstDay =
+                new Date(viewYear, viewMonth, 1).getDay();
+
+            const daysInMonth =
+                new Date(viewYear, viewMonth + 1, 0).getDate();
+
+            // EMPTY CELLS
+
+            for (let i = 0; i < firstDay; i++) {
+                const blank = document.createElement("div");
+                blank.className = "outside";
+                calendarEl.appendChild(blank);
+            }
+
+            let monthlyTotal = 0;
+
+            for (let day = 1; day <= daysInMonth; day++) {
+
+                const date =
+                    new Date(viewYear, viewMonth, day);
+
+                const key =
+                    date.toISOString().split("T")[0];
+
+                const record =
+                    data[key] || { entries: [] };
+
+                const total =
+                    record.entries.reduce((a, b) => a + b.value, 0);
+
+                monthlyTotal += total;
+
+                const cell = document.createElement("div");
+
+                // COLORS
+
+                const isWeekend =
+                    date.getDay() === 0 ||
+                    date.getDay() === 6;
+
+                if (isWeekend) {
+                    cell.classList.add(COLORS.weekend);
+                }
+                else if (record.entries.length === 0) {
+                    cell.classList.add(COLORS.noTrade);
+                }
+                else if (total > 0) {
+                    cell.classList.add(COLORS.profit);
+                }
+                else if (total < 0) {
+                    cell.classList.add(COLORS.loss);
+                }
+
+                cell.classList.add("cell");
+
+                // CONTENT
+
+                cell.innerHTML = `
+                    <div class="day-row">
+                        <div class="day-number">${day}</div>
+                        <div class="badge">${isWeekend ? "Weekend" : "Trade"}</div>
+                    </div>
+
+                    <div class="day-total">
+                        Total: ${total}
+                    </div>
+
+                    <input class="stock-input" placeholder="Stock / Asset">
+
+                    <div class="input-row">
+                        <input class="amount-input" type="number" placeholder="+ Profit / - Loss">
+                        <button class="add-btn">Add</button>
+                    </div>
+
+                    <div class="entries"></div>
+                `;
+
+                const stockInput =
+                    cell.querySelector(".stock-input");
+
+                const amountInput =
+                    cell.querySelector(".amount-input");
+
+                const addBtn =
+                    cell.querySelector(".add-btn");
+
+                const entriesEl =
+                    cell.querySelector(".entries");
+
+                // RENDER ENTRIES
+
+                function renderEntries() {
+
+                    entriesEl.innerHTML = "";
+
+                    record.entries.forEach((entry, index) => {
+
+                        const chip =
+                            document.createElement("div");
+
+                        chip.className = "entry-chip";
+
+                        chip.innerHTML = `
+                            ${entry.stock}: ${entry.value}
+
+                            <button class="remove-entry">✕</button>
+                        `;
+
+                        chip.querySelector(".remove-entry")
+                            .onclick = () => {
+
+                                record.entries.splice(index, 1);
+
+                                save();
+
+                                render();
+                            };
+
+                        entriesEl.appendChild(chip);
+                    });
+                }
+
+                renderEntries();
+
+                // ADD ENTRY
+
+                addBtn.onclick = () => {
+
+                    const stock =
+                        stockInput.value.trim();
+
+                    const value =
+                        Number(amountInput.value);
+
+                    if (!stock || !value) return;
+
+                    record.entries.push({
+                        stock,
+                        value
+                    });
+
+                    data[key] = record;
+
+                    save();
+
+                    render();
+                };
+
+                calendarEl.appendChild(cell);
+            }
+
+            // TOTALS
+
+            const totalEl =
+                document.getElementById("sectionTotal");
+
+            totalEl.innerText = monthlyTotal;
+
+            totalEl.className =
+                "summary-value " +
+                (monthlyTotal >= 0 ? "green" : "red");
+
+            document.getElementById("monthTotal")
+                .innerText = monthlyTotal;
+        }
+
+        function save() {
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(data)
+            );
+        }
+
+        render();
+
+    </script>
+
+</body>
+
+</html>

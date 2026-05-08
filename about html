@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Tracker - About</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            color: #1f2937;
+        }
+
+        /* NAVBAR */
+
+        .nav {
+            background: white;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .nav h2 {
+            color: #16a34a;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav button {
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .home-btn {
+            background: #22c55e;
+            color: white;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+        }
+
+        .nav button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* MAIN */
+
+        .container {
+            max-width: 1000px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .hero-card {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+        }
+
+        .hero-card h1 {
+            color: #16a34a;
+            margin-bottom: 15px;
+            font-size: 36px;
+        }
+
+        .hero-card p {
+            line-height: 1.7;
+            color: #4b5563;
+            font-size: 16px;
+        }
+
+        /* INFO GRID */
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card h3 {
+            color: #16a34a;
+            margin-bottom: 12px;
+        }
+
+        .card ul {
+            padding-left: 18px;
+            color: #4b5563;
+            line-height: 1.8;
+        }
+
+        .footer-card {
+            margin-top: 30px;
+            background: white;
+            padding: 28px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+        }
+
+        .footer-card h3 {
+            color: #16a34a;
+            margin-bottom: 12px;
+        }
+
+        .highlight {
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        @media(max-width:700px) {
+
+            .hero-card h1 {
+                font-size: 28px;
+            }
+
+            .hero-card,
+            .card,
+            .footer-card {
+                padding: 22px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <div class="nav">
+
+        <h2>Trading Tracker</h2>
+
+        <div class="nav-buttons">
+            <button class="home-btn"
+                onclick="window.location.href='home.html'">
+                Home
+            </button>
+
+            <button class="logout-btn"
+                onclick="logout()">
+                Logout
+            </button>
+        </div>
+
+    </div>
+
+    <!-- CONTENT -->
+
+    <div class="container">
+
+        <!-- HERO -->
+
+        <div class="hero-card">
+
+            <h1>About Trading Tracker</h1>
+
+            <p>
+                Trading Tracker is a modern web application designed to help traders
+                manage and track their daily trading performance in a simple,
+                visual, and organized way.
+                <br><br>
+
+                The platform allows users to track Profit/Loss separately for:
+                Stocks, F&O, Crypto, Commodities, and Forex markets.
+                Each section has its own independent calendar and trade records,
+                helping users analyze performance efficiently.
+            </p>
+
+        </div>
+
+        <!-- GRID -->
+
+        <div class="grid">
+
+            <div class="card">
+
+                <h3>Features</h3>
+
+                <ul>
+                    <li>Multi-user login system</li>
+                    <li>Separate asset tracking</li>
+                    <li>Monthly Profit/Loss summary</li>
+                    <li>Beautiful trading calendar UI</li>
+                    <li>Color-based trade visualization</li>
+                    <li>Persistent browser storage</li>
+                    <li>Responsive mobile-friendly design</li>
+                </ul>
+
+            </div>
+
+            <div class="card">
+
+                <h3>How To Use</h3>
+
+                <ul>
+                    <li>Create an account or login</li>
+                    <li>Open any trading section</li>
+                    <li>Add stock/asset name</li>
+                    <li>Enter profit or loss amount</li>
+                    <li>Track your daily trades visually</li>
+                    <li>Review monthly performance totals</li>
+                </ul>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Color Indicators</h3>
+
+                <ul>
+                    <li>🟢 Green → Profit</li>
+                    <li>🔴 Red → Loss</li>
+                    <li>🌸 Pink → No Trades</li>
+                    <li>🔵 Blue → Weekend/Holiday</li>
+                </ul>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Technology Used</h3>
+
+                <ul>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>JavaScript</li>
+                    <li>Vercel Deployment</li>
+                    <li>ChatGPT Go Assistance</li>
+                    <li>Browser Local Storage</li>
+                </ul>
+
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+
+        <div class="footer-card">
+
+            <h3>Created By</h3>
+
+            <p>
+                This project was created by
+                <span class="highlight">Jaligama Ramana</span>
+                using
+                <span class="highlight">ChatGPT Go</span>
+                and deployed using
+                <span class="highlight">Vercel</span>.
+            </p>
+
+        </div>
+
+    </div>
+
+    <script src="auth.js"></script>
+
+</body>
+
+</html>

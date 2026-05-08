@@ -221,10 +221,31 @@
             box-shadow: 0 0 0 3px #bbf7d0;
         }
 
-        .input-row {
-            display: flex;
-            gap: 8px;
-        }
+        .amount-input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #d1d5db;
+    font-size: 16px;
+}
+
+.add-btn {
+    width: 100%;
+    margin-top: 8px;
+    background: #22c55e;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.add-btn:hover {
+    background: #16a34a;
+}
 
         .add-btn {
             background: #22c55e;
@@ -513,10 +534,10 @@
 
                     <input class="stock-input" placeholder="Stock / Asset">
 
-                    <div class="input-row">
+                    
                         <input class="amount-input" type="number" placeholder="+ Profit / - Loss">
                         <button class="add-btn">Add</button>
-                    </div>
+                    
 
                     <div class="entries"></div>
                 `;

@@ -129,11 +129,37 @@ body {
 
     <!-- Sections -->
     <div class="grid">
-        <div class="card stocks" onclick="go('stocks.html')">Stocks<span>Track equity trades</span></div>
-        <div class="card fno" onclick="go('fno.html')">F&O<span>Options & Futures</span></div>
-        <div class="card crypto" onclick="go('crypto.html')">Crypto<span>Digital assets</span></div>
-        <div class="card commodities" onclick="go('commodities.html')">Commodities<span>Gold, Oil, etc.</span></div>
-        <div class="card forex" onclick="go('forex.html')">Forex<span>Currency trading</span></div>
+
+    <div class="card stocks"
+        onclick="go('tracker.html?type=stocks')">
+        Stocks
+        <span>Track equity trades</span>
+    </div>
+
+    <div class="card fno"
+        onclick="go('tracker.html?type=fno')">
+        F&O
+        <span>Options & Futures</span>
+    </div>
+
+    <div class="card crypto"
+        onclick="go('tracker.html?type=crypto')">
+        Crypto
+        <span>Digital assets</span>
+    </div>
+
+    <div class="card commodities"
+        onclick="go('tracker.html?type=commodities')">
+        Commodities
+        <span>Gold, Oil, etc.</span>
+    </div>
+
+    <div class="card forex"
+        onclick="go('tracker.html?type=forex')">
+        Forex
+        <span>Currency trading</span>
+    </div>
+
     </div>
 
 </div>
